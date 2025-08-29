@@ -3,17 +3,26 @@ import 'package:social_media_app/core/utils/theme/app_colors.dart';
 
 class AppTheme {
   static ThemeData lightTheme = ThemeData(
-    colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-    scaffoldBackgroundColor: AppColors.white,
+    colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
+    scaffoldBackgroundColor: AppColors.background,
+    appBarTheme: AppBarTheme(
+      backgroundColor: AppColors.white,
+      foregroundColor: AppColors.black,
+      elevation: 0,
+      iconTheme: IconThemeData(color: AppColors.black),
+    ),
     inputDecorationTheme: InputDecorationTheme(
       border: OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(8)),
+        borderSide: BorderSide(color: AppColors.greyBorder, width: 1),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(8)),
+        borderSide: BorderSide(color: AppColors.greyBorder, width: 1),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(8)),
+        borderSide: BorderSide(color: AppColors.greyBorder, width: 1),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(8)),
