@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:social_media_app/features/auth/models/user_data.dart';
 import 'package:social_media_app/features/auth/services/auth_services.dart';
 
 part 'auth_state.dart';
@@ -18,10 +17,18 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void> signUpWithEmail(String email, String password) async {
+  Future<void> signUpWithEmail({
+    required String email,
+    required String password,
+    required String name,
+  }) async {
     emit(AuthLoading());
     try {
-      await authServices.signUpWithEmail(email, password);
+      await authServices.signUpWithEmail(
+        email: email,
+        password: password,
+        name: name,
+      );
       emit(AuthSuccess());
     } catch (e) {
       emit(AuthFailure(e.toString()));
@@ -48,18 +55,12 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<UserData?> getUserData() async {
+  void checkUserAuth() {
     emit(AuthLoading());
-    try {
-      final userData = await authServices.getUserData();
-      if (userData != null) {
-        emit(AuthSuccess());
-      } else {
-        emit(AuthFailure('User data not found'));
-      }
-    } catch (e) {
-      emit(AuthFailure(e.toString()));
-      return null;
+
+    final userData = authServices.fetchUser();
+    if (userData != null) {
+      emit(AuthSuccess());
     }
   }
 }

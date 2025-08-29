@@ -18,7 +18,11 @@ class AuthServices {
     }
   }
 
-  Future<void> signUpWithEmail(String email, String password) async {
+  Future<void> signUpWithEmail({
+    required String email,
+    required String password,
+    required String name,
+  }) async {
     try {
       final response = await supabase.auth.signUp(
         email: email,
@@ -27,6 +31,7 @@ class AuthServices {
       if (response.user == null) {
         throw Exception('Failed to sign up');
       }
+      await _setUserData(name, email, response.user!.id);
     } catch (e) {
       rethrow;
     }
@@ -48,6 +53,12 @@ class AuthServices {
     }
   }
 
+  User? fetchUser() {
+    final user = supabase.auth.currentUser;
+    if (user == null) return null;
+    return user;
+  }
+
   Future<UserData?> getUserData() async {
     try {
       final user = supabase.auth.currentUser;
@@ -60,6 +71,19 @@ class AuthServices {
           .single();
 
       return UserData.fromMap(response);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> _setUserData(String name, String email, String userId) async {
+    try {
+      final user = supabase.auth.currentUser;
+      if (user == null) return;
+      await supabase
+          .from('users')
+          .insert({'name': name, 'email': email})
+          .eq('id', userId);
     } catch (e) {
       rethrow;
     }
