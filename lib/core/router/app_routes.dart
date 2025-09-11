@@ -1,10 +1,8 @@
 class AppRoutes {
+  static const String authRoute = '/auth';
   static const String homeRoute = '/home';
-  static const String profile = '/profile';
-  static const String settings = '/settings';
-  static const String authRoute = '/AuthPage';
-  static const String registerRoute = '/register';
-  static const String postDetails = '/postDetails';
-  static const String notifications = '/notifications';
-  static const String search = '/search';
+  static const String profileRoute = '/profile';
+  static const String postRoute = '/post';
+  static const String editProfileRoute = '/edit-profile';
+  static const String settingsRoute = '/settings';
 }
